@@ -19,3 +19,13 @@ npm run dev
 
 http://localhost:5173/
 で開いてVueアプリの起動を確認してください。
+
+# ダウンロード方法
+
+本番環境などで、最新のアプリをダウンロードする場合は下記を実行してください。
+
+```sh
+curl -L -o indexof-image-viewer.zip $(curl -s https://api.github.com/repos/LevelCapTech/indexof-image-viewer/releases/latest | grep "browser_download_url" | cut -d '"' -f 4)
+# あとは解凍して、nginx等に配置してください
+unzip -o indexof-image-viewer.zip -d /usr/share/nginx/html
+```

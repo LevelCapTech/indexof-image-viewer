@@ -1,0 +1,14 @@
+# 注意: このファイルに記載されている`@LevelCapTech`はサンプルのユーザー名です。
+# プロジェクトに適用する前に、適切なGitHubユーザー名やチーム名に置き換えてください。
+
+# ルートディレクトリのドキュメントファイル (*.md) に対しては、`@LevelCapTech`がレビューします。
+*.md @LevelCapTech
+
+# `/src`ディレクトリ内の全てのファイルに対しては、`@LevelCapTech`がレビューします。
+/src/ @LevelCapTech
+
+# 特定のファイル `package.json` に対しては、`@LevelCapTech`がレビューします。
+package.json @LevelCapTech
+
+# `src/`ディレクトリ内の全てのファイルに対しては、`@LevelCapTech`がレビューします。
+/src/ @LevelCapTech

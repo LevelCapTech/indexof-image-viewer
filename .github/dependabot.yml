@@ -1,0 +1,11 @@
+version: 2
+updates:
+  # npm (JavaScript/TypeScript) の依存関係を管理
+  - package-ecosystem: "npm" # 使用するパッケージ管理ツール
+    directory: "/"           # package.json が配置されているディレクトリ
+    schedule:
+      interval: "weekly"     # 更新頻度（daily, weekly, monthly から選択）
+    open-pull-requests-limit: 100 # 開いているPRの最大数
+    ignore:
+      - dependency-name: "vue" # 特定の依存関係の更新を無視（必要に応じて設定）
+        versions: ["3.x"]      # 無視するバージョン範囲を指定

@@ -1,0 +1,18 @@
+{
+  "name": "Vue3",
+  "dockerComposeFile": "./docker-compose.yml",
+  "service": "vue3-development",
+  "workspaceFolder": "/app",
+  //"postCreateCommand": "pip install -r requirements.txt",
+  "forwardPorts": [5173], // 必要に応じてポートを追加
+  "remoteUser": "root",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash"
+      }
+      ,
+      "extensions": ["ms-azuretools.vscode-docker","Vue.volar"]
+    }
+  }
+}

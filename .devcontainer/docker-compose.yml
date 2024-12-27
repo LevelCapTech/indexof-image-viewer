@@ -1,0 +1,9 @@
+services:
+  vue3-development:
+    build:
+      context: ..
+      dockerfile: ./.devcontainer/Dockerfile
+    image: vue3-development:dev
+    command: sleep infinity
+    volumes:
+      - ..:/app

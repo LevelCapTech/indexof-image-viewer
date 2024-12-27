@@ -1,0 +1,42 @@
+name: Build and Release
+
+on:
+  push:
+    branches:
+      - main # mainブランチにプッシュされたときに実行
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # コード取得
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 依存関係インストール
+      - name: Install dependencies
+        run: npm install
+
+      # ビルド実行
+      - name: Build project
+        run: npm run build
+
+      # バージョンとタイムスタンプを取得
+      - name: Generate version and timestamp
+        run: |
+          echo "VERSION=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
+
+      # dist フォルダをプロジェクト名 + バージョン付きで zip 圧縮
+      - name: Archive dist folder
+        run: zip -r indexof-image-viewer-${{ env.VERSION }}.zip dist/
+
+      # GitHub リリースへアップロード
+      - name: Upload Release Artifact
+        uses: softprops/action-gh-release@v1
+        with:
+          files: indexof-image-viewer-${{ env.VERSION }}.zip
+          tag_name: v1.0.${{ github.run_number }}
+          name: indexof-image-viewer Release ${{ env.VERSION }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

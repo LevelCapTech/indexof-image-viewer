@@ -7,3 +7,15 @@
 このテンプレートは、Vite を使用して Vue 3 と TypeScript を使った開発を始めるのに役立ちます。テンプレートでは Vue 3 の `<script setup>` SFCs（単一ファイルコンポーネント）を使用しています。詳細については、[script setup ドキュメント](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) をご覧ください。  
 
 推奨されるプロジェクトのセットアップ方法や IDE のサポートについては、[Vue ドキュメント TypeScript ガイド](https://vuejs.org/guide/typescript/overview.html#project-setup) を参照してください。
+
+# まず最初に
+
+devcontainerを起動したら、まず初めに下記を実行してください。
+
+```
+npm install
+npm run dev
+```
+
+http://localhost:5173/
+で開いてVueアプリの起動を確認してください。

@@ -17,7 +17,6 @@
 import { useRouter } from 'vue-router';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/css';
-//import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 const router = useRouter();

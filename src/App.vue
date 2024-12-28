@@ -1,9 +1,11 @@
 <template>
   <div id="app">
+    <!--
     <nav>
       <router-link to="/">Home</router-link>
       <router-link to="/about">About</router-link>
     </nav>
+    -->
     <!-- ルートビューを表示 -->
     <router-view />
   </div>
@@ -13,6 +15,15 @@
 </script>
 
 <style scoped>
+
+#app {
+  /* マージンやパディングなし */
+  margin: 0;
+  /*height: 100%;*/
+  min-height: 100vh;
+  padding: 0;
+}
+
 nav {
   display: flex;
   gap: 15px;

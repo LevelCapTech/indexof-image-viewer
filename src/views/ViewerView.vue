@@ -1,5 +1,6 @@
 <template>
   <div class="image-view">
+    <BackButton />
     <ImageSwiper :images="images"/>
   </div>
 </template>
@@ -7,6 +8,7 @@
 <script setup lang="ts">
   //import { useRoute } from 'vue-router';
   import ImageSwiper from '../components/ImageSwiper.vue';
+  import BackButton from '../components/BackButton.vue';
 
   //const route = useRoute();
   // const id = parseInt(Array.isArray(route.params.id) ? route.params.id[0] : route.params.id);

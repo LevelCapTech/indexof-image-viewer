@@ -1,5 +1,4 @@
 <template>
-
   <swiper
     :slides-per-view="1"
     :navigation="true"

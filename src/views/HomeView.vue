@@ -1,7 +1,7 @@
 <template>
   <div class="home-view">
     <h1>メインメニュー</h1>
-    <button @click="$router.push('/list')">ビューア起動</button>
+    <button @click="$router.push('/txt2img')">ビューア起動</button>
 
     <p>Welcome to the Home page!</p>
     <!-- カウンター -->

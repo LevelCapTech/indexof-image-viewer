@@ -13,7 +13,7 @@ defineProps<{
 
 // 画像表示イベント
 const viewImage = (model_id: string) => {
-  router.push(`/image/${model_id}`);
+  router.push(`/txt2img/${model_id}`);
 };
 </script>
 

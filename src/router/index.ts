@@ -11,13 +11,13 @@ const routes = [
     component: HomeView
   },
   {
-    path: '/image/:id',
-    name: 'image',
+    path: '/txt2img/:id',
+    name: 'txt2img',
     component: ViewerView
   },
   {
-    path: '/list',
-    name: 'list',
+    path: '/txt2img',
+    name: 'txt2img',
     component: GalleryView
   },
 ];

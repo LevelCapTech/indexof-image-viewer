@@ -1,5 +1,5 @@
 <template>
-  <a @click="viewImage(index)"><img src="http://192.168.10.85/sd/img/103182_0/103182_0_0_10a.png" /></a>
+  <a @click="viewImage(index)"><img src="http://192.168.10.85/sd/img/103182_0/103182_0_0_10.png" /></a>
 </template>
 
 <script setup lang="ts">

@@ -11,6 +11,13 @@ export default defineConfig({
     hmr: {               // ホットリロードの設定
       protocol: 'ws',    // WebSocket プロトコルを指定
       host: 'localhost', // 使用するホスト名
-    }
+    },
+    proxy: {
+      '/sd': { // プロキシ設定
+        target: 'http://192.168.10.85', // 実際のサーバーURL
+        changeOrigin: true,            // オリジンを偽装
+        rewrite: (path) => path.replace(/^\/sd/, '/sd') // パス書き換え
+      },
+    },
   }
 })

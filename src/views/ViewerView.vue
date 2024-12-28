@@ -1,22 +1,34 @@
 <template>
   <div class="image-view">
     <BackButton />
-    <ImageSwiper :images="images"/>
+    <ImageSwiper v-if="isImageSwiperLoaded" :images="files"/>
   </div>
 </template>
 
 <script setup lang="ts">
-  //import { useRoute } from 'vue-router';
   import ImageSwiper from '../components/ImageSwiper.vue';
   import BackButton from '../components/BackButton.vue';
+  import { useFileList } from '../composables/useFileList';
+  import { ref, onMounted } from 'vue';
 
+  // useFileListからimagesとfetchFileListを取得
+  const { files, fetchFileList } = useFileList();
+  // ImageSwiperのロード状態を管理するフラグ
+  const isImageSwiperLoaded = ref(false);
+  
   //const route = useRoute();
   // const id = parseInt(Array.isArray(route.params.id) ? route.params.id[0] : route.params.id);
 
-  const images = [
+  const images2 = [
     'http://192.168.10.85/sd/img/103182_0/103182_0_0_10.png',
     'http://192.168.10.85/sd/img/103182_0/103182_0_0_11.png'
   ];
+
+  // マウント時にファイルリストを取得し、ImageSwiperをロード
+  onMounted(async () => {
+    await fetchFileList('/sd/img/103182_0/');
+    isImageSwiperLoaded.value = true;
+  });
 
   // idの範囲チェック
   // const currentIndex = id >= 0 && id < images.length ? id : 0;
@@ -25,20 +37,6 @@
 <style scoped>
 
 .image-view {
-  /*
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  */
   min-height: 100vh;
 }
-/*
-.image-slide {
-   object-fit: cover; /* IE: not support */
-   /*
-   width: 100%;
-   height: 100vh;
-}
-*/
 </style>

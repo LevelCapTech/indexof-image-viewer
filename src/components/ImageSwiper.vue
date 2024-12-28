@@ -21,7 +21,7 @@ import 'swiper/css/pagination';
 
 defineProps<{ images: string[] }>();
 const onSwiper = (swiper: any) => {
-  console.log('Swiper initialized', swiper);
+  //console.log('Swiper initialized', swiper);
 };
 </script>
 

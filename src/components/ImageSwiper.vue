@@ -20,12 +20,7 @@ import 'swiper/css';
 //import 'swiper/css/navigation';　// 邪魔だからコメントアウト
 import 'swiper/css/pagination';
 
-interface Props {
-  images: string[]; // 画像リスト
-}
-
-//const props = defineProps<Props>();
-
+defineProps<{ images: string[] }>();
 const onSwiper = (swiper: any) => {
   console.log('Swiper initialized', swiper);
 };

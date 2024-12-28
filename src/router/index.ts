@@ -12,7 +12,7 @@ const routes = [
   },
   {
     path: '/txt2img/:id',
-    name: 'txt2img',
+    name: 'txt2img_detail',
     component: ViewerView
   },
   {

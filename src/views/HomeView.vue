@@ -1,8 +1,9 @@
 <template>
   <div class="home-view">
-    <h1>Home</h1>
-    <p>Welcome to the Home page!</p>
+    <h1>メインメニュー</h1>
+    <button @click="$router.push('/list')">ビューア起動</button>
 
+    <p>Welcome to the Home page!</p>
     <!-- カウンター -->
     <p>Count: {{ count }}</p>
     <button @click="incrementCounter">Click Me!</button>

@@ -1,19 +1,34 @@
 <template>
-  <div id="grid_wrapper">
-    <div v-for="(item, index) in 20" :key="index" class="grid_item">
-      <ItemCard />
+  <div id="grid_wrapper" v-if="isImageSwiperLoaded">
+    <div v-for="(item, index) in dirs" :key="index" class="grid_item">
+      <ItemCard :image_url="item.image_url" :model_id="item.model_id" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import ItemCard from '../components/ItemCard.vue';
+import { useFileList } from '../composables/useFileList';
+import { ref, onMounted } from 'vue';
+
+// useFileListからimagesとfetchFileListを取得
+const { dirs, fetchDirList } = useFileList();
+
+// ImageSwiperのロード状態を管理するフラグ
+const isImageSwiperLoaded = ref(false);
 
 // 画像一覧
-const images = [
-  'http://192.168.10.85/sd/img/103182_0/103182_0_0_10.png',
-  'http://192.168.10.85/sd/img/103182_0/103182_0_0_11.png',
-];
+// const images = [
+//   'http://192.168.10.85/sd/img/103182_0/103182_0_0_10.png',
+//   'http://192.168.10.85/sd/img/103182_0/103182_0_0_11.png',
+// ];
+
+
+// マウント時にファイルリストを取得し、ImageSwiperをロード
+onMounted(async () => {
+  await fetchDirList('/sd/img/');
+  isImageSwiperLoaded.value = true;
+});
 
 </script>
 

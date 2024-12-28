@@ -7,7 +7,7 @@ import axios from 'axios';
  */
 export function useFileList() {
   const files = ref<string[]>([]); // リアクティブなファイルリスト
-  const dirs = ref<string[]>([]); // リアクティブなディレクトリリスト
+  const dirs = ref<any[]>([]); // リアクティブなディレクトリリスト
 
   /**
    * 指定URLからディレクトリリストを取得
@@ -42,13 +42,19 @@ export function useFileList() {
       dirs.value = Array.from(links)
         .map((link) => link.getAttribute('href') || '')
         .filter((href) => href && !href.startsWith('?')) // クエリ文字列を除外
-        .filter((href) => href.endsWith('/')); // ディレクトリのみ抽出
-        // .map((href) => {
-        //   // パラメータurlを頭につけて絶対URLに変換
-        //   //const absoluteUrl = new URL(href, url).toString();
-        //   return 'http://192.168.10.85' + url + href;
-        // });
-      console.log('ディレクトリ一覧を取得しました', dirs.value);
+        .filter((href) => href.endsWith('/')) // ディレクトリのみ抽出
+        .filter((href) => !href.startsWith('../')) // 親ディレクトリへのリンクを除外
+        .map((href) => {
+          // 最後のスラッシュを取る
+          const dir_name = href.slice(0, -1);
+          // パラメータurlを頭につけて絶対URLに変換
+          //const absoluteUrl = new URL(href, url).toString();
+          return {
+            image_url: 'http://192.168.10.85' + url + href + dir_name + '_0_0.png',
+            model_id: dir_name
+          };
+        });
+      //console.log('ディレクトリ一覧を取得しました', dirs.value);
     } catch (error) {
       console.error('ファイル一覧の取得に失敗しました', error);
     }
@@ -111,5 +117,6 @@ export function useFileList() {
     files,
     dirs,
     fetchFileList,
+    fetchDirList
   };
 }

@@ -1,14 +1,19 @@
 <template>
-  <a @click="viewImage(index)"><img src="http://192.168.10.85/sd/img/103182_0/103182_0_0_10.png" /></a>
+  <a @click="viewImage(model_id)"><img :src="image_url" /></a>
 </template>
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
 const router = useRouter();
-const index = 0;
+
+defineProps<{
+  image_url: string;
+  model_id: string;
+}>();
+
 // 画像表示イベント
-const viewImage = (index: number) => {
-  router.push(`/image/${index}`);
+const viewImage = (model_id: string) => {
+  router.push(`/image/${model_id}`);
 };
 </script>
 

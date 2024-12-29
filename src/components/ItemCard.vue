@@ -1,20 +1,26 @@
 <template>
-  <a @click="viewImage(model_id)"><img :src="image_url" /></a>
+  <a @click="handleClick(model_id)"><img :src="image_url" ref="gridWrapper" /></a>
 </template>
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
-const router = useRouter();
+// import { ref } from 'vue';
 
 defineProps<{
   image_url: string;
   model_id: string;
 }>();
+const emit = defineEmits(['emit_click']);
 
-// 画像表示イベント
-const viewImage = (model_id: string) => {
-  router.push(`/txt2img/${model_id}`);
+// const gridWrapper = ref<HTMLElement | null>(null); // 親コンテナの参照
+
+const handleClick = (model_id: string) => {
+  // if (gridWrapper.value) {
+  //   const wrapperRect = gridWrapper.value.getBoundingClientRect();
+  //   console.log('Wrapper位置:', wrapperRect); // 親コンテナの位置情報
+  // }
+  emit('emit_click', model_id);
 };
+
 </script>
 
 <style scoped>

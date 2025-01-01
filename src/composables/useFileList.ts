@@ -53,7 +53,9 @@ export function useFileList() {
             image_url: 'http://192.168.10.85' + url + href + dir_name + '_0_0.png',
             model_id: dir_name
           };
-        });
+        })
+        // 降順に変更
+        .reverse();
       //console.log('ディレクトリ一覧を取得しました', dirs.value);
     } catch (error) {
       console.error('ファイル一覧の取得に失敗しました', error);

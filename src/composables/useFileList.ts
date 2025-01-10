@@ -50,7 +50,7 @@ export function useFileList() {
           // パラメータurlを頭につけて絶対URLに変換
           //const absoluteUrl = new URL(href, url).toString();
           return {
-            image_url: 'http://192.168.10.85' + url + href + dir_name + '_0_0.png',
+            image_url: 'http://192.168.10.85' + url + href + 'thumbnail.png',
             model_id: dir_name
           };
         })
@@ -103,6 +103,7 @@ export function useFileList() {
         .filter((href) => href && !href.startsWith('?')) // クエリ文字列を除外
         .filter((href) => !href.endsWith('/')) // ディレクトリを除外
         .filter((href) => !href.startsWith('../')) // 親ディレクトリへのリンクを除外
+        .filter((href) => !href.endsWith('thumbnail.png')) // thumbnail.pngを除外
         .map((href) => {
           // パラメータurlを頭につけて絶対URLに変換
           //const absoluteUrl = new URL(href, url).toString();

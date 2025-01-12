@@ -3,6 +3,10 @@
     <h1>メインメニュー</h1>
     <button @click="$router.push('/txt2img')">ビューア起動</button>
 
+    <hr />
+    <button @click="handleClick()">初回バッチ起動</button>
+    <hr />
+
     <p>Welcome to the Home page!</p>
     <!-- カウンター -->
     <p>Count: {{ count }}</p>
@@ -15,6 +19,9 @@
 <script setup lang="ts">
 import HelloWorld from '../components/HelloWorld.vue'
 import { ref } from 'vue';
+import { useProc } from '../composables/useProc';
+
+const { fetchProc1List } = useProc();
 
 // リアクティブな変数
 const count = ref(0);
@@ -22,6 +29,10 @@ const count = ref(0);
 // 関数
 const incrementCounter = () => {
   count.value++;
+};
+
+const handleClick = () => {
+  fetchProc1List();
 };
 </script>
 

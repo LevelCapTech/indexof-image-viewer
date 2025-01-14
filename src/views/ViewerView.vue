@@ -1,13 +1,14 @@
 <template>
   <div class="image-view">
     <BackButton />
-    <ImageSwiper v-if="isImageSwiperLoaded" :images="files"/>
+    <ImageSwiper v-if="isImageSwiperLoaded" :images="files" :model_id="model_id"/>
   </div>
 </template>
 
 <script setup lang="ts">
   import ImageSwiper from '../components/ImageSwiper.vue';
   import BackButton from '../components/BackButton.vue';
+//  import FavButton from '../components/FavButton.vue';
   import { useFileList } from '../composables/useFileList';
   import { ref, onMounted } from 'vue';
   import { useRoute } from 'vue-router';

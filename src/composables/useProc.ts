@@ -11,7 +11,6 @@ export function useProc() {
 
   /**
    * 指定URLからディレクトリリストを取得
-   * @param url ディレクトリ一覧のインデックスページURL
    * @returns 
    */
   const fetchProc1List = async () => {
@@ -26,6 +25,37 @@ export function useProc() {
       console.error('初回画像作成バッチ実行に失敗しました', error);
     }
   };
+
+  /**
+   * Deleteメソッドで/models/{model_id}にリクエストし、画像を削除する。
+   * リクエストボディ(json)は以下の形式で送信する
+   * {"file_name" : file_name}
+   * レスポンスボディ(json)は以下の形式で返ってくる
+   * {"model_id": model_id, "task id": result.id}
+   * レスポンスステータスが200で、result.idが取得できなければエラーとする
+   * メソッドレスポンスはbooleanを返し、エラーの場合はfalseを返す
+   */
+  const deleteImage = async (model_id: string, file_url: string) => {
+    try {
+      // file_nameは`http://192.168.10.85/sd/img/147921_0/147921_0_88nude_0_0.png`のような形式
+      // 147921_0_88nude_0_0の部分だけ取得してリクエストボディに設定する必要がある。
+      // そのため、スラッシュで分割して最後の要素を取得する
+      // 拡張子も削除する
+      const file_name = file_url?.split('/').pop()?.split('.').shift() ?? 'undefined';
+      const response = await axios.delete('/models/' + model_id, {
+        responseType: 'json',
+        data: {
+          file_name: file_name
+        }
+      });
+      // jsonレスポンスをjson文字列に変換
+      const json = JSON.stringify(response.data);
+      return json.includes('task_id');
+    } catch (error) {
+      console.error('画像削除に失敗しました', error);
+      return false;
+    }
+  }
 
   // /**
   //  * 指定URLからディレクトリリストを取得
@@ -138,6 +168,7 @@ export function useProc() {
     files,
     dirs,
     fetchProc1List,
+    deleteImage,
     // fetchFileList,
     // fetchDirList
   };

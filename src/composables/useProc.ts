@@ -42,7 +42,7 @@ export function useProc() {
       // そのため、スラッシュで分割して最後の要素を取得する
       // 拡張子も削除する
       const file_name = file_url?.split('/').pop()?.split('.').shift() ?? 'undefined';
-      const response = await axios.delete('/models/' + model_id, {
+      const response = await axios.delete('/fastapi/models/' + model_id, {
         responseType: 'json',
         data: {
           file_name: file_name

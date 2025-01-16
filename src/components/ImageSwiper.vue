@@ -1,6 +1,6 @@
 <template>
   <div class="myswiper" v-for="(image, index) in props.images" :key="index">
-    <TrashButton @emit_delete="onDelete" :pkey="index" :model_id="props.model_id" :url="image" />
+    <imageButtonBox @emit_delete="onDelete" :pkey="index" :model_id="props.model_id" :url="image" />
     <img :src="image" alt="Image" class="image-slide" />
   </div>
 </template>
@@ -11,7 +11,7 @@ import { ref } from 'vue';
 //import 'swiper/css';
 //import 'swiper/css/navigation';
 //import 'swiper/css/pagination';
-import TrashButton from './TrashButton.vue';
+import imageButtonBox from './imageButtonBox.vue';
 
 const props = defineProps<{ model_id: string; images: string[] }>();
 

@@ -49,7 +49,7 @@ export default {
 .back-button-container {
   position: fixed;
   bottom: 24px;
-  left: 24px;
+  right: 24px;
   z-index: 1000;
 }
 

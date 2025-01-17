@@ -1,7 +1,13 @@
 <template>
   <div class="home-view">
     <h1>メインメニュー</h1>
-    <button @click="$router.push('/txt2img')">ビューア起動</button>
+    <button @click="$router.push('/list/0')">初回画像作成リストを批評</button>
+
+    <hr />
+    <button @click="$router.push('/list/1')">妹とラブラブ</button>
+
+    <hr />
+    <button @click="$router.push('/list/2')">町娘を見てみる</button>
 
     <hr />
     <button @click="handleClick()">初回バッチ起動</button>

@@ -62,6 +62,45 @@ export function useFileList() {
     }
   };
 
+  const fetchDirList2 = async (id: number) => {
+    // 以下ファイルをキャッシュなしで取得する
+    // idが0の場合は、/sd/json/list.json
+    // idが1の場合は、/sd/json/yome_list.json
+    // idが2の場合は、/sd/json/sub_list.json
+    let url = '';
+    switch (id) {
+      case 0:
+        url = '/sd/json/list.json';
+        break;
+      case 1:
+        url = '/sd/json/yome_list.json';
+        break;
+      case 2:
+        url = '/sd/json/sub_list.json';
+        break;
+      default:
+        url = '/sd/json/list.json';
+        break;
+    }
+    try {
+      const response = await axios.get(url, {
+        headers: {
+          'Cache-Control': 'no-cache',
+          Pragma: 'no-cache',
+        },
+        params: {
+          t: new Date().getTime(), // タイムスタンプを追加してキャッシュ回避
+        },
+      });
+      // データをdirsにセット
+      dirs.value = response.data;
+      return response.data; // JSONデータを返す
+    } catch (error) {
+      console.error('Error fetching JSON:', error);
+      throw error; // エラーを呼び出し元に伝える
+    }
+  };
+
   /**
    * 指定URLからファイルリストを取得
    * @param url ファイル一覧のインデックスページURL
@@ -120,6 +159,7 @@ export function useFileList() {
     files,
     dirs,
     fetchFileList,
-    fetchDirList
+    fetchDirList,
+    fetchDirList2
   };
 }

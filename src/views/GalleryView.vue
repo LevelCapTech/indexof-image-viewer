@@ -10,11 +10,11 @@
 import ItemCard from '../components/ItemCard.vue';
 import { useFileList } from '../composables/useFileList';
 import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 const router = useRouter();
 
 // useFileListからimagesとfetchFileListを取得
-const { dirs, fetchDirList } = useFileList();
+const { dirs, fetchDirList2 } = useFileList();
 
 // ImageSwiperのロード状態を管理するフラグ
 const isImageSwiperLoaded = ref(false);
@@ -25,6 +25,8 @@ const onClickCard = (model_id: string) => {
   sessionStorage.setItem('model_id', model_id);
   router.push(`/txt2img/${model_id}`);
 };
+const route = useRoute();
+const id = Array.isArray(route.params.id) ? route.params.id[0] : route.params.id;
 
 // 画像一覧
 // const images = [
@@ -34,7 +36,7 @@ const onClickCard = (model_id: string) => {
 
 // マウント時にファイルリストを取得し、ImageSwiperをロード
 onMounted(async () => {
-  await fetchDirList('/sd/img/');
+  await fetchDirList2(parseInt(id));
   isImageSwiperLoaded.value = true;
   
   // モデルIDがある場合、スクロール位置を調整

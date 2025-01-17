@@ -17,7 +17,7 @@ const routes = [
     component: ViewerView
   },
   {
-    path: '/txt2img',
+    path: '/list/:id',
     name: 'txt2img',
     component: GalleryView
   },

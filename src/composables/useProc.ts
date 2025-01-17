@@ -57,7 +57,7 @@ export function useProc() {
     }
   }
 
-    /**
+  /**
    * Postメソッドで/models/{model_id}/thumbnailにリクエストし、thumbnailを設定する。
    * リクエストボディ(json)は以下の形式で送信する
    * {"file_name" : file_name}
@@ -75,6 +75,27 @@ export function useProc() {
         const file_name = file_url?.split('/').pop()?.split('.').shift() ?? 'undefined';
         const response = await axios.post('/fastapi/models/' + model_id + '/thumbnail', {
           file_name: file_name
+        });
+        // jsonレスポンスをjson文字列に変換
+        const json = JSON.stringify(response.data);
+        return json.includes('task_id');
+      } catch (error) {
+        console.error('サムネイル設定に失敗しました', error);
+        return false;
+      }
+    }
+
+    const favoriteImage = async (model_id: string, princess: boolean, rank: number, appeal: number) => {
+      try {
+        // file_nameは`http://192.168.10.85/sd/img/147921_0/147921_0_88nude_0_0.png`のような形式
+        // 147921_0_88nude_0_0の部分だけ取得してリクエストボディに設定する必要がある。
+        // そのため、スラッシュで分割して最後の要素を取得する
+        // 拡張子も削除する
+        const response = await axios.post('/fastapi/models/' + model_id, {
+          princess: princess,
+          rank: rank,
+          appeal: appeal,
+          memo: ''
         });
         // jsonレスポンスをjson文字列に変換
         const json = JSON.stringify(response.data);
@@ -198,6 +219,7 @@ export function useProc() {
     fetchProc1List,
     deleteImage,
     thumbImage,
+    favoriteImage,
     // fetchFileList,
     // fetchDirList
   };

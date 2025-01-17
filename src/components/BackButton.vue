@@ -1,5 +1,4 @@
 <template>
-  <div class="back-button-container">
     <button
       class="back-button"
       @mouseenter="isHovered = true"
@@ -23,7 +22,6 @@
         />
       </svg>
     </button>
-  </div>
 </template>
 
 <script>
@@ -46,13 +44,6 @@ export default {
 </script>
 
 <style scoped>
-.back-button-container {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  z-index: 1000;
-}
-
 .back-button {
   border-radius: 9999px;
   padding: 12px;

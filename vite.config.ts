@@ -24,5 +24,8 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/fastapi/, '/fastapi') // パス書き換え
       },
     },
-  }
+  },
+  build: {
+    chunkSizeWarningLimit: 1000, // しきい値を 1000KB に設定
+  },
 })

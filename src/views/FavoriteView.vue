@@ -1,7 +1,14 @@
 <template>
+
+  <!-- モデル名 -->
+  <h1><a :href="civital_harf" target="_blank">{{ model_name }}</a></h1>
+
   <div class="image-view">
     <img :src="image" alt="Image" class="image-slide" />
   </div>
+  
+  <!-- プロンプト情報 -->
+  <pre>{{ json }}</pre>
 
   <div class="controls">
     <!-- 選択ボックス 1 -->
@@ -30,6 +37,9 @@
 
     <!-- テキストエリア memo -->
     <textarea v-model="memo" placeholder="メモ" rows="4"></textarea>
+
+    <!-- ブラウザバックボタン -->
+    <button @click="router.back()">Back</button>
   </div>
 </template>
 
@@ -37,7 +47,7 @@
   import { ref, onMounted } from 'vue';
   import { useRoute, useRouter } from 'vue-router';
   import { useProc } from '../composables/useProc';
-  const { favoriteImage } = useProc();
+  const { favoriteImage,fetchModelName,fetchPromptJson } = useProc();
   const router = useRouter(); // vue-router をインポートして使用
   const route = useRoute();
   const model_id = Array.isArray(route.params.id) ? route.params.id[0] : route.params.id;
@@ -53,6 +63,10 @@
 
   // メモ
   const memo = ref('');
+  const model_name = ref('');
+  const civital_harf = ref('');
+  // json文字列
+  const json = ref('');
 
   // 選択ボックスのオプション
   const options = [
@@ -127,6 +141,16 @@
   // マウント時の処理（必要なら追加）
   onMounted(() => {
     console.log('Mounted');
+    // モデル名を取得する
+    fetchModelName(model_id).then((result) => {
+      model_name.value = result;
+    });
+    const harfModelId = model_id.split('_').shift() ?? '';
+    civital_harf.value = "https://civitai.com/models/" + harfModelId + "/";
+    // プロンプト情報を取得する
+    fetchPromptJson(model_id).then((result) => {
+      json.value = JSON.stringify(result, null, 2);
+    });
   });
 </script>
 

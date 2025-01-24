@@ -58,6 +58,50 @@ export function useProc() {
   }
 
   /**
+   * リクエストパラメータのmodel_idはアンダースコア以降を削除してmodel_idとする
+   * GETメソッドで/fastapi/models/{model_id}/civitaiにリクエストし、Jsonを取得する
+   * json.nameを取得して返す
+   * レスポンスステータスが200以外の場合は"名称取得エラー"を返す
+   * @returns model_name: モデル名
+   */
+  const fetchModelName = async (model_id: string) => {
+    try {
+      // 157785_0のような場合、_0の部分を切り取る
+      model_id = model_id.split('_').shift() ?? 'undefined';
+      const response = await axios.get('/fastapi/models/' + model_id + '/civitai', {
+        responseType: 'json',
+      });
+      // jsonレスポンスをjson文字列に変換
+      const json = JSON.stringify(response.data);
+      // jsonデータにnameが含まれている場合、nameの値を返す。取得できなければ'名称取得エラー'を返す
+      return json.includes('name') ? response.data.name : '名称取得エラー';
+    } catch (error) {
+      console.error('モデル名取得に失敗しました', error);
+      return '名称取得エラー';
+    }
+  }
+
+  /**
+   * リクエストパラメータのmodel_idはアンダースコア以降を削除してmodel_idとする
+   * GETメソッドで/fastapi/models/{model_id}/promptにリクエストし、Jsonを取得し返す・
+   * レスポンスステータスが200以外の場合は空のJsonを返す
+   * @returns jsonオブジェクト
+   */
+  const fetchPromptJson = async (model_id: string) => {
+    try {
+      // 157785_0のような場合、_0の部分を切り取る
+      model_id = model_id.split('_').shift() ?? 'undefined';
+      const response = await axios.get('/fastapi/models/' + model_id + '/prompt', {
+        responseType: 'json',
+      });
+      return response.data.checkedEn;
+    } catch (error) {
+      console.error('Prompt取得に失敗しました', error);
+      return {};
+    }
+  }
+
+  /**
    * Postメソッドで/models/{model_id}/thumbnailにリクエストし、thumbnailを設定する。
    * リクエストボディ(json)は以下の形式で送信する
    * {"file_name" : file_name}
@@ -220,6 +264,8 @@ export function useProc() {
     deleteImage,
     thumbImage,
     favoriteImage,
+    fetchModelName,
+    fetchPromptJson,
     // fetchFileList,
     // fetchDirList
   };

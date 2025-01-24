@@ -27,6 +27,9 @@
     
     <!-- ボタン -->
     <button @click="onClick">Click me</button>
+
+    <!-- テキストエリア memo -->
+    <textarea v-model="memo" placeholder="メモ" rows="4"></textarea>
   </div>
 </template>
 
@@ -47,6 +50,9 @@
   //   rank: int # 嫁ランク
   //   appeal: int # 再現性
   //   memo: str
+
+  // メモ
+  const memo = ref('');
 
   // 選択ボックスのオプション
   const options = [
@@ -108,7 +114,7 @@
   const onClick = () => {
     console.log('onClick - Model ID:', model_id);
     // 結果がtrueの時のみemit('emit_delete', props.pkey);する
-    favoriteImage(model_id, selectedOption1.value == '1', parseInt(selectedOption2.value), parseInt(selectedOption3.value)).then((result) => {
+    favoriteImage(model_id, memo.value, selectedOption1.value == '1', parseInt(selectedOption2.value), parseInt(selectedOption3.value)).then((result) => {
       if (!result) {
         alert('登録に失敗しました');
       }
@@ -144,6 +150,7 @@
 select,
 button {
   width: 100%; /* 横幅100% */
+  height: 50px;
   padding: 10px; /* 内側の余白 */
   font-size: 1rem;
   border: 1px solid #ccc; /* 枠線 */

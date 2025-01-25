@@ -23,6 +23,11 @@ export default defineConfig({
         changeOrigin: true,            // オリジンを偽装
         rewrite: (path) => path.replace(/^\/fastapi/, '/fastapi') // パス書き換え
       },
+      '/cimg': { // プロキシ設定
+        target: 'http://192.168.10.85', // 実際のサーバーURL
+        changeOrigin: true,            // オリジンを偽装
+        rewrite: (path) => path.replace(/^\/cimg/, '/cimg') // パス書き換え
+      },
     },
   },
   build: {

@@ -1,7 +1,8 @@
 <template>
   <div id="grid_wrapper" v-if="isImageSwiperLoaded">
     <div v-for="(item, index) in dirs" :key="index" :id="'model-' + item.model_id" class="grid_item">
-      <ItemCard :image_url="item.image_url" :model_id="item.model_id" @emit_click="onClickCard" />
+      <!-- v-ifしてmodel_idがsave_model_idと一致しない場合のみ表示-->
+      <ItemCard v-if="item.model_id !== save_model_id" :image_url="item.image_url" :model_id="item.model_id" @emit_click="onClickCard" />
     </div>
   </div>
 </template>
@@ -27,6 +28,11 @@ const onClickCard = (model_id: string) => {
 };
 const route = useRoute();
 const id = Array.isArray(route.params.id) ? route.params.id[0] : route.params.id;
+
+// ローカルストレージ'save_model_id'が存在するとき
+const save_model_id = sessionStorage.getItem('save_model_id');
+console.log('save_model_id:', save_model_id);
+sessionStorage.removeItem('save_model_id');
 
 // 画像一覧
 // const images = [

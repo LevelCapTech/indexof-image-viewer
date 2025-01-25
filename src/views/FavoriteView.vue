@@ -6,11 +6,27 @@
   <div class="image-view">
     <img :src="image" alt="Image" class="image-slide" />
   </div>
+
+  <!-- baseImageListを画像表示 -->
+  <div  v-for="baseImage in baseImageList">
+    <img  v-if="baseImage" :src="baseImage" alt="Image" class="image-slide" />
+  </div>
   
   <!-- プロンプト情報 -->
   <pre>{{ json }}</pre>
 
   <div class="controls">
+    <!-- 短縮操作用のボタン:ボタンの色を変える -->
+    <button @click="onClickA1" class="yellow">A1:姫様</button>
+    <button @click="onClickA2" class="blue">A2:レギュラー(リスト入り)</button>
+    <button @click="onClickA3" class="green">A3:保留</button>
+
+    <hr>
+
+    <button @click="onClickB2" class="orange">B2:かわいい子（リスト外）</button>
+
+    <hr>
+
     <!-- 選択ボックス 1 -->
     <select v-model="selectedOption1" @change="onSelectChange1">
       <option v-for="option in options_princess" :key="option.value" :value="option.value">
@@ -124,6 +140,35 @@
     console.log('Selected Option 3:', selectedOption3.value);
   };
 
+  const onClickA1 = () => {
+    selectedOption1.value = '1';
+    selectedOption2.value = '1';
+    selectedOption3.value = '11';
+    // onClickを着火
+    onClick();
+  };
+
+  const onClickA2 = () => {
+    selectedOption1.value = '0';
+    selectedOption2.value = '1';
+    selectedOption3.value = '12';
+    onClick();
+  };
+
+  const onClickA3 = () => {
+    selectedOption1.value = '0';
+    selectedOption2.value = '1';
+    selectedOption3.value = '13';
+    onClick();
+  };
+
+  const onClickB2 = () => {
+    selectedOption1.value = '0';
+    selectedOption2.value = '2';
+    selectedOption3.value = '22';
+    onClick();
+  };
+
   // ボタンのクリックイベント
   const onClick = () => {
     console.log('onClick - Model ID:', model_id);
@@ -132,11 +177,32 @@
       if (!result) {
         alert('登録に失敗しました');
       }
+      // セッションストレージにmodel_id(save_model_id)を保存
+      sessionStorage.setItem('save_model_id', model_id);
+      // セッションストレージからmodel_idを削除
+      sessionStorage.removeItem('model_id');
       router.push({
         name: 'Home',
       });
     });
   };
+
+  const checkImage = async (id: string) => {
+    const url1 = '/cimg/' + id +'.jpeg';
+    const response = await fetch(url1, { method: "HEAD" });
+    return response.ok ? url1 : '';
+  };
+
+  const baseImageList = ref<string[]>([]);
+  // model_idの_以降を削除してcheckImageを実行する
+  for (let i = 0; i < 3; i++) {
+    const harfModelId = model_id.split('_').shift() ?? '';
+    checkImage(harfModelId + '_' + i).then((url) => {
+      if (url) {
+        baseImageList.value.push(url);
+      }
+    });
+  }
 
   // マウント時の処理（必要なら追加）
   onMounted(() => {
@@ -192,4 +258,24 @@ button {
 button:hover {
   background-color: #0056b3; /* ホバー時の背景色 */
 }
+
+button.yellow {
+  background-color: #ffd75e;
+  color: #323232;
+}
+
+button.blue {
+  background-color: #007bff;
+}
+
+button.green {
+  background-color: #28a745;
+}
+
+button.orange {
+  background-color: #ff9640;
+  color: #323232;
+}
+
+
 </style>
